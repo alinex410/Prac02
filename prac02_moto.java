@@ -18,7 +18,6 @@ public class Moto extends Cliente {
     // Declaraciones
     private int id_moto;
     private String matricula;
-    private static int cantidad=0;
     private String nombre_m;
     private String cent_cub;
     private float coste;
@@ -29,12 +28,12 @@ public class Moto extends Cliente {
     private static ArrayList<Moto> array_motos = new ArrayList<>();
 
     // Expresiones regulares
-    String patron_num = "[0-9]+";
+    //String patron_num = "[0-9]+";
     String patron_cc = "[1-9][0-9]|[1-9]|[1-5][0-9]{2,2}";
     String patron_coste = "[1-9][0-9]*(.[0-9]+){0,1}";
     String patron_mat = "[0-9]{5}[A-Z]{3}";
 
-    Pattern pnum = Pattern.compile(patron_num);
+    //Pattern pnum = Pattern.compile(patron_num);
     Pattern pcc = Pattern.compile(patron_cc);
     Pattern pc = Pattern.compile(patron_coste);
     Pattern pm = Pattern.compile(patron_mat);
@@ -107,22 +106,6 @@ public class Moto extends Cliente {
      */
     public void setMatricula(String matricula) {
         this.matricula = matricula;
-    }
-
-    /**
-     * Getter de la cantidad de motos que hay en la aplicacion.
-     *
-     * @return el numero de motos.
-     */
-    public int getCantidad() {
-        return cantidad;
-    }
-
-    /**
-     * Setter de la cantidad de motos, incrementamos en 1 cada vez que se añade una.
-     */
-    public void setCantidad() {
-        this.cantidad = cantidad + 1;
     }
 
     /**
@@ -339,29 +322,6 @@ public class Moto extends Cliente {
         return correcto;
     }
 
-    /**
-     * Método que comprueba que la opción introducida por teclado sea un número
-     * (Mira si la expresión regular se cumple)
-     *
-     * @param numero    Numero de la moto
-     * @return          true si el numero es valido.
-     *                  false si no introducimos un numero y por tanto se pide
-     *                  volver a introducir un numero.
-     */
-    public boolean comprobarNumero(String numero)
-    {
-        matcher = pnum.matcher(numero);
-
-            if(!matcher.matches())
-            {
-               correcto = false;
-               System.out.println("Opción invalida. Debe introducir un número.");
-            }
-            else
-               correcto = true;
-
-        return correcto;
-    }
 
     /**
      * Método que comprueba que en la cesión que se va a producir, el cliente no
@@ -477,7 +437,7 @@ public class Moto extends Cliente {
          }
    }
 
-     /**
+    /**
     * Setter del importe adicional.
     *
     * @param importe_adicional el precio adicional.
@@ -545,7 +505,7 @@ public class Moto extends Cliente {
          }
     }
 
-     /**
+    /**
     * Getter del importe total que posee una moto.
     *
     * @return el importe total.
@@ -586,6 +546,32 @@ public class Moto extends Cliente {
          }
     }
 
+    /**
+    * Método que vuelca en un array los id de las motos que posee el cliente
+    * que se la pasa por parametro.
+    *
+    * @param idmiembro número de socio.
+    *
+    * @return ArrayList : el id de las motos que posee el cliente.
+    */
+    public ArrayList<Integer> MotosPoseeCliente(int idmiembro)
+    {
+         ArrayList<Integer> motos_cliente = new ArrayList<Integer>();
+         int j=0;
+
+         for(int i=0; i< array_motos.size(); i++)
+         {
+             if(array_motos.get(i).getNum_socio()== idmiembro)
+             {
+                 // Vamos introduciendo en el array todas las motos que posee dicho cliente.
+                motos_cliente.add(array_motos.get(i).getId_moto());
+                j++;
+             }
+         }
+
+        return motos_cliente;
+
+    }
 
 
 
