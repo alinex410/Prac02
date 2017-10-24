@@ -74,10 +74,11 @@ public class Lab2 {
         System.out.println("1. Registrar un nuevo miembro");
         System.out.println("2. Registrar una nueva motocicleta");
         System.out.println("3. Registrar una cesion ");
-        System.out.println("4. Listar en pantalla los miembros con motos en posesión ");
-        System.out.println("5. Listar todas las motos");
-        System.out.println("6. Listar todas las cesiones realizadas");
-        System.out.println("7. Salir");
+        System.out.println("4. Incrementar otros gastos a una moto");
+        System.out.println("5. Listar en pantalla los miembros con motos en posesión ");
+        System.out.println("6. Listar todas las motos");
+        System.out.println("7. Listar todas las cesiones realizadas");
+        System.out.println("8. Salir");
 
        do{
 
@@ -120,18 +121,30 @@ public class Lab2 {
                           ces = insertar_cesion();
                 break;
                 case 4:
+                       if(m.getCantidad() >= 1)
+                       {
+                         m = insertar_importe_moto();
+                       }
+                       else
+                       {
+                           System.out.println("No se puede incrementar el importe porque actualmente ");
+                           System.out.println("no hay ninguna moto registrada.");
+                       }
+
+                break;
+                case 5:
                     System.out.println("---Clientes registrados---\n");
                     mostrar_clientes(c.getArrayClientes());
                 break;
-                case 5:
+                case 6:
                     System.out.println("---Motos registradas---\n");
                     mostrar_Array(m.getArrayMotos());
                 break;
-                case 6:
+                case 7:
                     System.out.println("---Cesiones registradas---\n");
                     mostrar_Array(ces.getArrayCesion());
                 break;
-                case 7:
+                case 8:
                    salir(c,m,ces);
                 break;
                 default: //Si se introduce cualquier otro número que no esté entre el 1 y el 7:
@@ -150,9 +163,55 @@ public class Lab2 {
          }
 
         }
-        while(opcion != 7);
+        while(opcion != 8);
 
     }
+
+    public static Moto insertar_importe_moto()
+    {
+        String idmotoS, importeS;
+        int idmotoI;
+        float coste_act_m, importeF;
+
+        Moto m = new Moto();
+        System.out.println("---Motos registradas---");
+        mostrar_Array(m.getArrayMotos());
+
+        do
+        {
+            System.out.println("Seleccione el id de una moto: ");
+            idmotoS = teclado.next();
+
+            correcto = m.comprobarNumero(idmotoS);
+
+        }while(!correcto);
+
+         idmotoI = Integer.parseInt(idmotoS);
+
+         // Obtenemos el coste actual de la moto
+        coste_act_m = m.getCosteMoto(idmotoI);
+
+        do
+        {
+            System.out.println("Importe adicional: ");
+            importeS = teclado.next();
+
+            // Comprueba que el importe introducido por teclado es correcto
+            correcto = m.comprobarImporte(importeS);
+
+        }while(!correcto);
+
+        // Actualizamos el importe Adicional que posee la moto
+        importeF = Float.parseFloat(importeS);
+
+        m.ActualizarImporteAdicional(idmotoI,importeF);
+
+        // Actualizamos el importe total que tiene la moto (coste + importeAdicional)
+         m.ActualizarImporteTotal(idmotoI,m.getImporteAdicionalMoto(idmotoI),coste_act_m);
+
+        return m;
+    }
+
 
     /**
      * void insertar_cliente()
@@ -223,7 +282,8 @@ public class Lab2 {
     {
         Moto m = new Moto();
         int socio_selec;
-        String socio_selecS;
+        float coste_adicionalF, costeF, importe_total;
+        String socio_selecS, coste_adicionalS;
 
         System.out.println("'Insertar Moto'");
         System.out.println("Introduzca ':s' para abortar la operación.\n");
@@ -291,6 +351,28 @@ public class Lab2 {
              correcto = m.comprobarCoste(coste, importeF);
 
             }while(!correcto);
+
+         costeF = Float.parseFloat(coste);
+
+         //Costes adicionales
+         do
+         {
+           System.out.println("\nCostes adicionales de la moto: ");
+           coste_adicionalS = teclado.next();
+
+           correcto = m.comprobarImporte(coste_adicionalS);
+
+         }while(!correcto);
+
+         // Pasamos el coste a float
+         coste_adicionalF = Float.parseFloat(coste_adicionalS);
+
+         // Actualizamos los costes adicionales de la moto:
+         m.setImporteAdicional(coste_adicionalF);
+
+         //Actualizamos el coste total de la moto (Coste + costes adicionales)
+         importe_total = costeF + coste_adicionalF;
+         m.setImporteTotal(importe_total);
 
         // Matricula:
          do
