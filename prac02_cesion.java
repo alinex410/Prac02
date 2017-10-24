@@ -144,6 +144,7 @@ public class Cesion extends Moto {
     {
         return " "+String.format("%03d", this.getId_cesion())+"   Moto "+String.format("%03d", this.getId_moto())+"    "+this.getFecha()+ "   Socio "
                 +(String.format("%03d",this.getSocioPoseeMoto()))+ " cede a socio "+(String.format("%03d",this.getSocioCedeMoto()));
+
     }
 
 
