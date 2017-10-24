@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package lab1;
+package prac02;
 import java.util.ArrayList;
 import java.util.Formatter;
 import java.util.regex.Matcher;
@@ -274,8 +274,9 @@ public class Moto extends Cliente {
      *                  false en caso de que el coste sea un valor incorrecto o supera
      *                  los 6000 €.
      */
-    public boolean comprobarCoste(String scoste)
+    public boolean comprobarCoste(String scoste,float importe)
     {
+
 
         matcher = pc.matcher(scoste);
 
@@ -288,14 +289,14 @@ public class Moto extends Cliente {
             {
                this.coste = Float.parseFloat(scoste);
 
-               if(this.coste <= 6000)
+               if(this.coste <= importe)
                {
                   correcto = true;
                }
                else
                {
                   correcto = false;
-                  System.out.println("El coste de la moto sobrepasa los 6000 euros.");
+                  System.out.println("El coste de la moto sobrepasa los "+importe +" euros.");
 
                }
              }
@@ -371,7 +372,7 @@ public class Moto extends Cliente {
      *                          no existe, no podremos obtener el precio de las motos
      *                          y por tanto el precio supera los 6000.
      */
-   public boolean comprobarCosteClienteMoto(int id_cliente, float costeM_actual)
+   public boolean comprobarCosteClienteMoto(int id_cliente, float costeM_actual, float importe)
    {
        float precioMotos=0;
 
@@ -386,12 +387,12 @@ public class Moto extends Cliente {
 
             // Sumamos el coste de la moto actual a las motos que ya posee el cliente.
             precioMotos = costeM_actual + precioMotos;
-            // Si el precio sobrepasa los 1000 euros se devuelve una advertencia.
-            if(precioMotos > 6000)
+            // Si el precio sobrepasa el importe se devuelve una advertencia.
+            if(precioMotos > importe)
             {
                 correcto = false;
                 System.out.println("Este cliente no puede tener la moto en su posesión");
-                System.out.println("(sobrepasa los 6000 euros)");
+                System.out.println("(sobrepasa los "+importe+" euros)");
             }
             // Si el precio no sobrepasa los 1000 euros
             else
