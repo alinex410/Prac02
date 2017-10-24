@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package lab1;
+package prac02;
 
 import java.io.FileWriter;
 import java.io.PrintWriter;
@@ -19,7 +19,7 @@ import java.util.Scanner;
  *
  * @author Aline Exojo González y María Ortiz Riera
  */
-public class Lab1 {
+public class Lab2 {
 
     /**
      * @param args the command line arguments
@@ -34,6 +34,8 @@ public class Lab1 {
     private static String coste;
     private static int id_cesion = 0;
     private static boolean correcto;
+    private static float importeF;
+
     private static PrintWriter pw = null;
     private static ArrayList<?> array = new ArrayList<>();
 
@@ -55,6 +57,18 @@ public class Lab1 {
         Moto m = new Moto();
         Cliente c = new Cliente();
         Cesion ces = new Cesion();
+        String importeS;
+
+        do
+        {
+            System.out.println("Introduzca el importe: ");
+            importeS = teclado.next();
+
+            correcto = c.comprobarImporte(importeS);
+
+        }while(!correcto);
+
+        importeF = Float.parseFloat(importeS);
 
         System.out.println("------------------- MENU -------------------------------");
         System.out.println("1. Registrar un nuevo miembro");
@@ -160,6 +174,8 @@ public class Lab1 {
         // Número de socio (se asignará por orden en el que se ha dado de alta):
         n_socio++;
         c.setNum_socio(n_socio);
+
+
 
      try{
          // Nombre del socio:
@@ -272,7 +288,7 @@ public class Lab1 {
                 throw new Exception();
              /***********************/
 
-             correcto = m.comprobarCoste(coste);
+             correcto = m.comprobarCoste(coste, importeF);
 
             }while(!correcto);
 
@@ -328,7 +344,7 @@ public class Lab1 {
                 }while(!correcto);
 
               // Comprobamos que el socio no sobrepasa los 1000 euros en posesiones de motos
-              correcto = m.comprobarCosteClienteMoto(socio_selec, m.getCoste());
+              correcto = m.comprobarCosteClienteMoto(socio_selec, m.getCoste(),importeF);
 
             }while(!correcto);
 
@@ -446,7 +462,7 @@ public class Lab1 {
               {
                 ces.setSocioCedeMoto(n_socio2); // *
 
-                opcorrecta = ces.comprobarCosteClienteMoto(n_socio2,ces.getCosteMoto(id_moto));
+                opcorrecta = ces.comprobarCosteClienteMoto(n_socio2,ces.getCosteMoto(id_moto),importeF);
               }
 
             }while(!opcorrecta);
