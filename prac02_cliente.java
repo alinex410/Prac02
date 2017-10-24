@@ -20,6 +20,7 @@ public class Cliente {
     private String nombre_c;
     private float importe;
     private int n_motos;
+    private int num_cesiones; // Número de cesiones recibidas
 
     private static ArrayList<Cliente> array_clientes = new ArrayList<>();
 
@@ -36,6 +37,7 @@ public class Cliente {
 
     Matcher matcher;
 
+
     /**
      * Constructor de la clase Cliente, sin parametros.
      */
@@ -44,6 +46,7 @@ public class Cliente {
         this.nombre_c = "";
         this.importe = 0;
         this.n_motos = 0;
+        this.num_cesiones = 0;
 
     }
 
@@ -452,6 +455,82 @@ public class Cliente {
              }
          }
 
+    }
+
+     /**
+    * Método que obtiene el número de cesiones del cliente.
+    *
+    * @return num_cesiones
+    */
+    public int getNumCesionesCliente()
+    {
+        return this.num_cesiones;
+    }
+
+     /**
+    * Método que obtiene el número de cesiones de un cliente determinado.
+    *
+    * @param idcliente
+    */
+    public int getNumCesionesCliente(int idcliente)
+    {
+        int num_cesiones=0;
+
+         for(int i=0; i< array_clientes.size(); i++)
+         {
+             if(array_clientes.get(i).getNum_socio() == idcliente)
+             {
+                num_cesiones = array_clientes.get(i).getNumCesionesCliente();
+             }
+         }
+
+         return num_cesiones;
+    }
+
+     /**
+    * Método que introduce el número de cesiones recibidas de un cliente;
+    * se hace un incremento en 1.
+    */
+     public void setNumCesionesRecCliente()
+    {
+       this.num_cesiones = this.num_cesiones + 1;
+    }
+
+     /**
+    * Método que introduce el número de cesiones recibidas de un cliente determinado
+    * (el que se le pasa por parámetro).
+    *
+    * @param idcliente
+    */
+    public void setNumCesionesRecCliente(int idcliente)
+    {
+
+         for(int i=0; i< array_clientes.size(); i++)
+         {
+             if(array_clientes.get(i).getNum_socio() == idcliente)
+             {
+                 array_clientes.get(i).setNumCesionesRecCliente();
+             }
+         }
+    }
+
+    /**
+    * Método que devuelve el valor del máximo número de cesiones recibidas
+    * que tiene un cliente.
+    */
+    public int clienteConMasCesiones()
+    {
+        int mas_cesiones=0;
+
+        for(int i=0; i< array_clientes.size(); i++)
+        {
+             if(array_clientes.get(i).getNumCesionesCliente() > mas_cesiones)
+             {
+                mas_cesiones = array_clientes.get(i).getNumCesionesCliente();
+             }
+        }
+
+        return mas_cesiones;
     }
 
 }
